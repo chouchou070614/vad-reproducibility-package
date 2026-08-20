@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "authority": "FROZEN_PROTOCOL.json takes precedence",
+  "common": {
+    "input_height": 256,
+    "input_width": 256,
+    "memory_slots": 10,
+    "kmeans_seed": 2020,
+    "kmeans_normal_only": true
+  },
+  "branches": {
+    "P": {
+      "learning_rate": 0.0002,
+      "loss_compact": 0.1,
+      "loss_separate": 0.1,
+      "t_length": 5
+    },
+    "R": {
+      "learning_rate": 0.00002,
+      "loss_compact": 0.01,
+      "loss_separate": 0.01,
+      "t_length": 2
+    }
+  },
+  "ped2": {
+    "epochs": 60,
+    "warmup_epoch": 26,
+    "alpha_R": 0.7,
+    "alpha_P": 0.6
+  },
+  "avenue": {
+    "epochs": 60,
+    "warmup_epoch": 27,
+    "alpha_R": 0.7,
+    "alpha_P": 0.7
+  },
+  "shanghai": {
+    "epochs": 10,
+    "warmup_epoch": 5,
+    "alpha_R": 0.7,
+    "alpha_P": 0.6
+  }
+}

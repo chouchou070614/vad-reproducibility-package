@@ -1,0 +1,12 @@
+{
+  "state": "PASS",
+  "files": 124,
+  "manifest_entries": 124,
+  "generated_files_excluded": [
+    "MANIFEST.sha256",
+    "RELEASE_AUDIT.json"
+  ],
+  "manifest_sha256": "e72b195dec0ac16cb6bc2461376eb224f2cdd74bb023b044f63ea6ea2eb19c68",
+  "git_history": "PASS",
+  "errors": []
+}

@@ -1,0 +1,14 @@
+name: kmtf-vad-hygon-dtk2204
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7.13
+  - numpy=1.21.6
+  - scipy=1.7.3
+  - scikit-learn=1.0.2
+  - opencv=4.6
+  - matplotlib=3.5
+  - pillow
+  - pip
+# PyTorch 1.10.0 for DTK 22.04 must be loaded from the cluster vendor module.
+# It is intentionally not replaced by a standard CUDA wheel.

@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "status": "COMPLETED",
+  "generated_at": "2026-08-14T23:39:22.317393+08:00",
+  "environment": {
+    "cuda_available": true,
+    "cuda_runtime": "11.8",
+    "cudnn": 8700,
+    "device": "cuda",
+    "gpu": {
+      "capability": [
+        8,
+        9
+      ],
+      "name": "NVIDIA GeForce RTX 4090",
+      "total_memory_bytes": 25252724736
+    },
+    "platform": "Linux-5.15.0-78-generic-x86_64-with-glibc2.35",
+    "python": "3.9.25 (main, Nov  3 2025, 22:33:05) \n[GCC 11.2.0]",
+    "torch": "2.0.1"
+  },
+  "parameters": {
+    "P": 15651843,
+    "R": 14872515,
+    "details": {
+      "P": {
+        "total": 15651843,
+        "trainable": 15651843
+      },
+      "R": {
+        "total": 14872515,
+        "trainable": 14872515
+      }
+    },
+    "joint_unique_total": 30524358
+  },
+  "flops": {
+    "P": {
+      "coverage_definition": "key_averages events with non-zero event.flops",
+      "coverage_event_count": 2,
+      "fallback_reason": "THOP unavailable: ModuleNotFoundError: No module named 'thop'",
+      "flops_per_forward": 685768704000.0,
+      "method": "torch_profiler_with_flops",
+      "profiled_event_count": 96,
+      "raw_events": {
+        "events_csv": {
+          "bytes": 13541,
+          "path": "flops_events/P_torch_profiler_events.csv",
+          "sha256": "463e855796552e3f7b664998c8dfb649b296d0ea7a12a4c5c5c9f9ceb466b5ed"
+        },
+        "events_json": {
+          "bytes": 33919,
+          "path": "flops_events/P_torch_profiler_events.json",
+          "sha256": "17791a1b13edb12337a8bcb7220b88261cd8fb6a0a1afedcd434d63567e65864"
+        }
+      },
+      "status": "MEASURED"
+    },
+    "R": {
+      "coverage_definition": "key_averages events with non-zero event.flops",
+      "coverage_event_count": 2,
+      "fallback_reason": "THOP unavailable: ModuleNotFoundError: No module named 'thop'",
+      "flops_per_forward": 564368769024.0,
+      "method": "torch_profiler_with_flops",
+      "profiled_event_count": 96,
+      "raw_events": {
+        "events_csv": {
+          "bytes": 13481,
+          "path": "flops_events/R_torch_profiler_events.csv",
+          "sha256": "9a119d1147c17291c4c1f117d48008f168346310bd84461b255a83b4250c4b71"
+        },
+        "events_json": {
+          "bytes": 33861,
+          "path": "flops_events/R_torch_profiler_events.json",
+          "sha256": "dc92d87688fd4f29fa6adfbcdc075a62b0a4ba5516a8f7323e22228427659d13"
+        }
+      },
+      "status": "MEASURED"
+    },
+    "joint": {
+      "derivation": "R + P FLOPs",
+      "flops_per_joint_forward": 1250137473024.0,
+      "method": "sum_R_P",
+      "source_methods": {
+        "P": "torch_profiler_with_flops",
+        "R": "torch_profiler_with_flops"
+      },
+      "status": "CALCULATED"
+    }
+  },
+  "forward": {
+    "P": {
+      "cuda_memory": {
+        "baseline_allocated_bytes": 322338816,
+        "incremental_peak_bytes": 1427194368,
+        "peak_allocated_bytes": 1749533184,
+        "status": "MEASURED"
+      },
+      "device": "cuda",
+      "fps": [
+        386.211276831697,
+        386.52335889286627,
+        386.0127763562453,
+        385.8706851389077,
+        386.49930658316816,
+        385.55559464503636,
+        385.3812744310334,
+        385.69497736752476,
+        385.68074825688035,
+        385.7530187686364
+      ],
+      "fps_mean": 385.91830172719955,
+      "fps_std": 0.36800362020067645,
+      "frames_per_repetition": 48,
+      "ms_per_frame_mean": 2.5912243717660504,
+      "ms_per_frame_std": 0.0024699387794782724,
+      "name": "P",
+      "repetitions": 10,
+      "seconds": [
+        0.1242843046784401,
+        0.12418395653367043,
+        0.1243482157588005,
+        0.12439400516450405,
+        0.12419168464839458,
+        0.12449566461145878,
+        0.12455197796225548,
+        0.12445067428052425,
+        0.12445526570081711,
+        0.12443194910883904
+      ],
+      "seconds_mean": 0.12437876984477043,
+      "seconds_std": 0.00011855706141495869,
+      "std_definition": "population standard deviation across repetitions"
+    },
+    "R": {
+      "cuda_memory": {
+        "baseline_allocated_bytes": 322318336,
+        "incremental_peak_bytes": 1091535360,
+        "peak_allocated_bytes": 1413853696,
+        "status": "MEASURED"
+      },
+      "device": "cuda",
+      "fps": [
+        447.3198459152791,
+        446.92886987026634,
+        447.773842913693,
+        447.5733986189902,
+        447.42982900393497,
+        447.8227018713484,
+        447.6990772169,
+        447.7454381872291,
+        447.59558532956345,
+        446.98757698105726
+      ],
+      "fps_mean": 447.4876165908262,
+      "fps_std": 0.30300741638163087,
+      "frames_per_repetition": 48,
+      "ms_per_frame_mean": 2.2346997361940644,
+      "ms_per_frame_std": 0.0015139751375693718,
+      "name": "R",
+      "repetitions": 10,
+      "seconds": [
+        0.10730576887726784,
+        0.10739964060485363,
+        0.10719697177410126,
+        0.10724497959017754,
+        0.10727939195930958,
+        0.10718527622520924,
+        0.10721487365663052,
+        0.1072037722915411,
+        0.10723966360092163,
+        0.1073855347931385
+      ],
+      "seconds_mean": 0.10726558733731509,
+      "seconds_std": 7.267080660332944E-05,
+      "std_definition": "population standard deviation across repetitions"
+    },
+    "joint": {
+      "cuda_memory": {
+        "baseline_allocated_bytes": 322338816,
+        "incremental_peak_bytes": 1433485824,
+        "peak_allocated_bytes": 1755824640,
+        "status": "MEASURED"
+      },
+      "device": "cuda",
+      "fps": [
+        207.10592989619045,
+        207.00835185049323,
+        207.1871042355485,
+        207.1828899300317,
+        207.15241377807965,
+        207.18518362366896,
+        207.07566773672647,
+        207.14244797857535,
+        207.13172228637836,
+        207.1944571933032
+      ],
+      "fps_mean": 207.1366168508996,
+      "fps_std": 0.056400626100126285,
+      "frames_per_repetition": 48,
+      "ms_per_frame_mean": 4.82773200298349,
+      "ms_per_frame_std": 0.001314893563344764,
+      "name": "joint",
+      "repetitions": 10,
+      "seconds": [
+        0.23176545463502407,
+        0.23187470249831676,
+        0.23167465068399906,
+        0.23167936317622662,
+        0.2317134477198124,
+        0.23167679831385612,
+        0.2317993249744177,
+        0.23172459565103054,
+        0.2317365948110819,
+        0.23166642896831036
+      ],
+      "seconds_mean": 0.23173113614320756,
+      "seconds_std": 6.311489104054585E-05,
+      "std_definition": "population standard deviation across repetitions"
+    }
+  },
+  "artifact_checksums": {
+    "ped2_R_model": "b02373840ea7b0db20c148f25566e9029c94c4d34ce8f9894d32c7a3cda3931f",
+    "ped2_P_model": "5107baf1b670060ab9d7c7ddf1d60d0beeeba1375d49be52aa0307a94ae95cdf",
+    "note": "Paths removed for anonymous release; hashes identify the measured checkpoints."
+  },
+  "protocol": {
+    "batch_size": 8,
+    "cuda_synchronize": true,
+    "repetitions": 10,
+    "resolution": [
+      256,
+      256
+    ],
+    "seed": 2020,
+    "video_list": [
+      "01",
+      "02",
+      "03"
+    ],
+    "warmup_iterations": 3,
+    "config_path": "configs/benchmark_ped2_kmemory_seed2020.json",
+    "config_sha256": "1abc4da7aac518d50727b8c543e2e7436cc868bcc2b51ff5d12a01f997ddfd37"
+  }
+}

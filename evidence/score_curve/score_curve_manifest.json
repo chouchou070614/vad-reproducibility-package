@@ -1,0 +1,21 @@
+{
+  "dataset": "UCSD Ped2",
+  "video": "02",
+  "seed": 2020,
+  "aligned_frame_start": 4,
+  "aligned_frame_end": 179,
+  "aligned_frame_count": 176,
+  "ground_truth_positive_frames": 86,
+  "source_npz": "evidence\\freeze\\ped2_seed2020_final_scores.npz",
+  "source_npz_sha256": "7789381f088db285cfc884e62522aada9f98cff991603a6cad4e045d8a0b76c8",
+  "csv": "evidence\\score_curve\\ped2_video_02_continuous_scores.csv",
+  "csv_sha256": "d8e9841d484d6b56c980fdd3119faf40f389fd5e58fdc80131de06799593a499",
+  "figure": "figures\\fig5_score_curve.png",
+  "figure_sha256": "4c89cd8a3d509e725d85b62ac8e55818bb05f177231e00e1f93c28cbf666a457",
+  "score_fields": [
+    "ECDF_R",
+    "ECDF_P",
+    "ECDF_Final_temporal"
+  ],
+  "note": "Continuous aligned frames; shaded red interval and GT strip are derived directly from stored labels."
+}

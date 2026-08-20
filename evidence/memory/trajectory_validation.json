@@ -1,0 +1,25 @@
+{
+  "state": "passed",
+  "passed": true,
+  "overall_pass": true,
+  "schema_version": "memory-trajectory-v2",
+  "task_id": "COND01_ped2_P_kmemory_continue_trajectory_seed2020",
+  "dataset": "ped2",
+  "family": "KMemory",
+  "evidence_family": "KMemoryTrajectory",
+  "branch": "P",
+  "seed": 2020,
+  "same_training_trajectory": true,
+  "warmup_epoch": 26,
+  "memory_shape": [
+    10,
+    512
+  ],
+  "query_count_full": 2545664,
+  "query_sample_count": 4096,
+  "normalized_raw_centers_match_actual_and_post_replacement": true,
+  "deterministic_priority_sample_recomputed": true,
+  "final_memory_equal_final_keys": true,
+  "nearest_slot_and_distance_recomputed": true,
+  "checked_at": "2026-08-14T22:55:36.160727+08:00"
+}

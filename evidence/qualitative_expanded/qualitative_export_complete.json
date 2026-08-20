@@ -1,0 +1,12 @@
+{
+  "config_path": "artifact://qualitative/configs/qualitative_ped2_expanded.json",
+  "config_sha256": "6d8a5eef405c6848bc5ea9b4af31a5fbd7438f46bad1b5b59a975abd3b91c1a9",
+  "device": "cpu",
+  "generated_at": "2026-08-18T20:48:02.528133+00:00",
+  "manifest_path": "qualitative_manifest.csv",
+  "manifest_rows": 25,
+  "manifest_sha256": "e86f4a894dd30ada2abacacde3f37d09aa8845d9e6948faa8c85d013b6a8ecc6",
+  "samples": 4,
+  "status": "COMPLETED",
+  "test_time_memory_update": false
+}

@@ -1,0 +1,61 @@
+{
+  "error_visualization_max": 0.25,
+  "samples": [
+    {
+      "p_memory_distance": 5.36119841854088e-07,
+      "p_pixel_mse": 7.414770516334102e-05,
+      "r_memory_distance": 7.053602894302458e-05,
+      "r_pixel_mse": 0.00026085670106112957,
+      "selection_rule": "predeclared_config_no_test_label_or_score_search",
+      "target_frame": 90,
+      "video": "02"
+    },
+    {
+      "p_memory_distance": 1.423507342224184e-06,
+      "p_pixel_mse": 0.00015524981427006423,
+      "r_memory_distance": 8.554198575438932e-05,
+      "r_pixel_mse": 0.0004549503210000694,
+      "selection_rule": "predeclared_config_no_test_label_or_score_search",
+      "target_frame": 75,
+      "video": "03"
+    },
+    {
+      "p_memory_distance": 6.343775567074772e-07,
+      "p_pixel_mse": 0.0001366865762975067,
+      "r_memory_distance": 7.629967149114236e-05,
+      "r_pixel_mse": 0.0004405100189615041,
+      "selection_rule": "predeclared_config_no_test_label_or_score_search",
+      "target_frame": 120,
+      "video": "12"
+    },
+    {
+      "p_memory_distance": 5.196070560486987e-07,
+      "p_pixel_mse": 0.00018583372002467513,
+      "r_memory_distance": 0.00010280840069754049,
+      "r_pixel_mse": 0.0005986213218420744,
+      "selection_rule": "predeclared_config_no_test_label_or_score_search",
+      "target_frame": 100,
+      "video": "04"
+    }
+  ],
+  "schema_version": 1,
+  "selection_rule": "predeclared_config_no_test_label_or_score_search",
+  "source_artifacts": {
+    "p_keys": {
+      "path": "artifact://ped2/kmeans_w26_P/keys.pt",
+      "sha256": "3b574ef5295ef50077513ae1fac015bf6e3b34a2caffb1dd93af9db1bef13467"
+    },
+    "p_model": {
+      "path": "artifact://ped2/kmeans_w26_P/model.pth",
+      "sha256": "5107baf1b670060ab9d7c7ddf1d60d0beeeba1375d49be52aa0307a94ae95cdf"
+    },
+    "r_keys": {
+      "path": "artifact://ped2/kmeans_w26_R/keys.pt",
+      "sha256": "cacece4dbb4dc7adad3a2a46d5947d424dcacdfb8c9b837a5107bdb58b408c4e"
+    },
+    "r_model": {
+      "path": "artifact://ped2/kmeans_w26_R/model.pth",
+      "sha256": "b02373840ea7b0db20c148f25566e9029c94c4d34ce8f9894d32c7a3cda3931f"
+    }
+  }
+}
