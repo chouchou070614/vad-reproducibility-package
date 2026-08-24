@@ -1,4 +1,4 @@
-# Task-Adapted Memory Reorganization and Dual-Branch Scoring for Video Anomaly Detection
+# Task-Adapted Memory Reorganization and Complementary Dual-Branch Scoring for Video Anomaly Detection
 
 PyTorch implementation.
 
