@@ -1,0 +1,55 @@
+{
+  "alignment": "intersection of exact (video_name, frame_index) keys",
+  "bootstrap": {
+    "iterations": 2000,
+    "paired": true,
+    "seed": 20260816,
+    "unit": "video"
+  },
+  "calibration": "per-branch normal-training ECDF",
+  "cvpr2020_reference_MNAD_P_with_memory_percent": {
+    "avenue": 88.5,
+    "ped2": 97.0,
+    "shanghai": 70.5
+  },
+  "datasets": {
+    "avenue": {
+      "seeds": [
+        2020
+      ]
+    },
+    "ped2": {
+      "seeds": [
+        2020,
+        2021,
+        2022
+      ]
+    },
+    "shanghai": {
+      "seeds": [
+        2020
+      ]
+    }
+  },
+  "dataset_configuration": {
+    "avenue": {
+      "causal": false,
+      "parameter": 3.0,
+      "smoother": "gaussian",
+      "weight_R": 0.1
+    },
+    "ped2": {
+      "causal": false,
+      "parameter": 3.0,
+      "smoother": "gaussian",
+      "weight_R": 0.4
+    },
+    "shanghai": {
+      "causal": true,
+      "parameter": 0.725,
+      "smoother": "ema",
+      "weight_R": 0.55
+    }
+  },
+  "method": "K-means memory replacement + fixed R/P fusion + temporal smoothing"
+}

@@ -73,7 +73,7 @@ python Fuse.py --dataset ped2 \
   --output ped2_scores.npz
 ```
 
-Dataset-specific fusion settings are in `configs/FROZEN_PROTOCOL.json`.
+Dataset-specific fusion settings are in `configs/DATASET_CONFIG.json`.
 Additional examples are provided in [docs/REPRODUCE.md](docs/REPRODUCE.md).
 
 ## Figures

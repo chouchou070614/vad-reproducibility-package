@@ -62,7 +62,7 @@ python Fuse.py --dataset ped2 \
 
 The same command supports `avenue` and `shanghai`. It performs exact frame-key
 alignment, branch-wise ECDF calibration, weighted fusion, and per-video
-temporal refinement using `configs/FROZEN_PROTOCOL.json`.
+temporal refinement using `configs/DATASET_CONFIG.json`.
 
 ## Figures
 
