@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Canonical raw-component export for one KMTF-VAD branch and split."""
+"""Export raw score components for one branch and data split."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def build_command(args: argparse.Namespace) -> list[str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Export frozen KMTF-VAD branch evidence")
+    parser = argparse.ArgumentParser(description="Export KMTF-VAD branch components")
     parser.add_argument("--branch", choices=("R", "P"), required=True)
     parser.add_argument("--split", choices=("training", "testing"), required=True)
     parser.add_argument("--dataset", choices=("ped2", "avenue", "shanghai"), required=True)
@@ -68,4 +68,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

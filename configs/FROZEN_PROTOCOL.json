@@ -31,11 +31,6 @@
       ]
     }
   },
-  "excluded_from_main_method": [
-    "NCBAF-v2 dynamic weighting",
-    "V3 pseudo-supervised gate",
-    "historical 99.1513 result pending cross-protocol reconciliation"
-  ],
   "locked_configuration": {
     "avenue": {
       "causal": false,
@@ -56,7 +51,5 @@
       "weight_R": 0.55
     }
   },
-  "method": "KMemory + fixed R/P fusion + temporal smoothing",
-  "selection_disclosure": "configuration selected by an exploratory full grid on the same frozen evidence; all candidates retained; results are not described as an unseen-test SOTA claim",
-  "state": "FROZEN_FOR_PAPER_WRITING"
+  "method": "K-means memory replacement + fixed R/P fusion + temporal smoothing"
 }

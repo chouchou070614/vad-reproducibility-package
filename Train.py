@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Canonical KMTF-VAD training entry point built on the MNAD branch code."""
+"""Training entry point for the reconstruction and prediction branches."""
 
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def build_command(args: argparse.Namespace) -> list[str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train one frozen KMTF-VAD branch")
+    parser = argparse.ArgumentParser(description="Train one KMTF-VAD branch")
     parser.add_argument("--branch", choices=("R", "P"), required=True)
     parser.add_argument("--dataset", choices=("ped2", "avenue", "shanghai"), required=True)
     parser.add_argument("--dataset-root", required=True)
@@ -70,4 +70,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

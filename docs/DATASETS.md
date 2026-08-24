@@ -1,40 +1,37 @@
 # Dataset preparation
 
-Obtain UCSD Ped2, CUHK Avenue, and ShanghaiTech from their official or
-authorized distribution channels.  This package does not redistribute video
-frames or annotations.
+Download UCSD Ped2, CUHK Avenue, and ShanghaiTech from their official sources.
+The repository does not include dataset frames or annotations.
 
-Use the following layout, where every video is a directory of zero-padded,
-chronologically ordered image frames:
+## Directory layout
 
 ```text
 dataset/
   ped2/
-    training/frames/<video-id>/*.jpg
-    testing/frames/<video-id>/*.jpg
+    training/frames/<video-id>/*
+    testing/frames/<video-id>/*
   avenue/
-    training/frames/<video-id>/*.jpg
-    testing/frames/<video-id>/*.jpg
+    training/frames/<video-id>/*
+    testing/frames/<video-id>/*
   shanghai/
-    training/frames/<video-id>/*.jpg
-    testing/frames/<video-id>/*.jpg
+    training/frames/<video-id>/*
+    testing/frames/<video-id>/*
 ```
 
-The loader resolves labels through the dataset logic in
-`src/mnad/data/data_seqkey_all.py`.  Preserve the official video ordering and
-frame counts.  Do not concatenate videos before temporal smoothing: the
-Gaussian/EMA state is reset at every video boundary.
+Each video is stored in a separate directory. Frame names should be
+zero-padded and chronologically ordered.
 
-For Avenue, `src/mnad/convert_avenue_cv32_exact_png.py` records the historical
-OpenCV-based conversion path used during reproduction.  Before a long run,
-execute `src/mnad/preflight.py` and verify:
+The prediction branch uses four context frames and one target frame. The
+reconstruction branch processes one target frame. R/P outputs are matched by
+`(video_name, frame_index)` before fusion, and temporal smoothing is applied
+independently to each video.
 
-- all training and testing videos are present;
-- frame names sort chronologically;
-- no frame is unreadable;
-- label length equals the test-frame count after branch-specific alignment;
-- the prediction branch uses four context frames and one target frame;
-- the reconstruction branch uses the single target frame.
+For Avenue, `src/mnad/convert_avenue_cv32_exact_png.py` contains the OpenCV
+frame-conversion utility used in our experiments. The dataset loader and label
+handling are implemented in `src/mnad/data/data_seqkey_all.py`.
 
-Dataset access terms remain those of the original dataset providers.
+Before training, the dataset can be checked with:
 
+```bash
+python src/mnad/preflight.py --help
+```
