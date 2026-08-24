@@ -1,18 +1,17 @@
-# KMTF-VAD
+# Task-Adapted Memory Reorganization and Dual-Branch Scoring for Video Anomaly Detection
 
-PyTorch implementation of **Task-Adapted Memory Reorganization and
-Complementary Dual-Branch Scoring for Video Anomaly Detection**.
+PyTorch implementation.
 
-## Requirements
+## Installation
 
-The experiments use Python 3.9, PyTorch 2.0.1, and CUDA 11.8.
+Python 3.9, PyTorch 2.0.1, and CUDA 11.8 are used in the experiments.
 
 ```bash
 conda env create -f environments/nvidia-cu118.yml
 conda activate kmtf-vad-cu118
 ```
 
-## Datasets
+## Data
 
 Download UCSD Ped2, CUHK Avenue, and ShanghaiTech from their official sources.
 Extract the video frames using the following layout:
@@ -24,12 +23,11 @@ dataset/
   shanghai/{training,testing}/frames/<video-id>/*
 ```
 
-See [docs/DATASETS.md](docs/DATASETS.md) for the Avenue conversion script and
-frame-format details.
+See [docs/DATASETS.md](docs/DATASETS.md) for the Avenue conversion script.
 
 ## Training
 
-Train the prediction and reconstruction branches separately:
+Train the prediction and reconstruction branches separately.
 
 ```bash
 python Train.py --branch P --dataset ped2 \
@@ -39,12 +37,12 @@ python Train.py --branch R --dataset ped2 \
   --dataset-root ./dataset --output ./experiments/ped2_R
 ```
 
-Replace `ped2` with `avenue` or `shanghai` for the other datasets. Training
-settings are listed in `configs/BRANCH_TRAINING.json`.
+Replace `ped2` with `avenue` or `shanghai`. Training settings are in
+`configs/BRANCH_TRAINING.json`.
 
 ## Evaluation
 
-First export the training and testing scores for both branches:
+Export training and testing scores for both branches.
 
 ```bash
 python Evaluate.py --branch R --split training --dataset ped2 \
@@ -73,8 +71,8 @@ python Fuse.py --dataset ped2 \
   --output ped2_scores.npz
 ```
 
-Dataset-specific fusion settings are in `configs/DATASET_CONFIG.json`.
-Additional examples are provided in [docs/REPRODUCE.md](docs/REPRODUCE.md).
+Fusion settings are in `configs/DATASET_CONFIG.json`. Additional commands are
+in [docs/REPRODUCE.md](docs/REPRODUCE.md).
 
 ## Figures
 
@@ -83,15 +81,4 @@ python scripts/build_qualitative_figure.py
 python scripts/build_score_curve.py
 ```
 
-The numerical results and figure inputs used by these scripts are included in
-`evidence/`.
-
-## Acknowledgement
-
-This implementation is based on
-[MNADrc](https://github.com/alchemi5t/MNADrc), a public reimplementation of
-[MNAD](https://github.com/cvlab-yonsei/MNAD).
-
-## Citation
-
-The BibTeX entry will be added after the review process.
+Figure inputs are in `evidence/`.
