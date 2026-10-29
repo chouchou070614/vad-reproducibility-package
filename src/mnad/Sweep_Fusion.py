@@ -1,7 +1,6 @@
-"""Report R/P score-fusion sensitivity without retraining either branch.
+"""Evaluate fusion-weight sensitivity using saved R/P scores and labels.
 
-This utility is deliberately analysis-only: it reads the saved R and P score
-files and writes a CSV of AUC values for a list of beta values.
+Write AUROC values for the supplied beta values to a CSV file.
 """
 import argparse
 import csv

@@ -1,9 +1,4 @@
-"""Ped2-P KMemory-Continue training with same-trajectory Memory snapshots.
-
-This is a narrowly instrumented copy of ``ped2_Train_Pred.py``.  Training,
-losses, optimizer, scheduler, K-means parameters and Memory update semantics
-are unchanged.  Only audit artifacts are added.
-"""
+"""Train the Ped2 prediction branch and save memory snapshots along its trajectory."""
 
 from __future__ import annotations
 
@@ -258,8 +253,7 @@ for epoch in range(args.epochs):
             separateness_loss,
             compactness_loss,
         ) = model.forward(imgs[:, 0:12], m_items, True)
-        # This task is explicitly Continue, so this resolves identically to
-        # the source implementation's non-freeze path.
+        # Continue memory updates after the K-means replacement.
         memory_is_frozen = (
             args.freeze_memory_after_kmeans and epoch >= args.kmeans_warmup_epochs
         )
@@ -311,9 +305,7 @@ for epoch in range(args.epochs):
             trace_sample_count=args.trajectory_sample_count,
             trace_seed=args.trajectory_trace_seed,
         )
-        # The contract's "actual_kmeans_centers" are the normalized centers
-        # actually assigned to Memory.  Preserve sklearn's raw, pre-normalized
-        # centers separately as additional audit evidence.
+        # Save both the normalized memory centers and the raw K-means centers.
         torch.save(
             kmeans_centers.detach().cpu().clone(),
             trajectory_dir / trajectory_files["actual_kmeans_centers"],
@@ -333,9 +325,7 @@ for epoch in range(args.epochs):
             if args.trajectory_trace_seed is None
             else args.trajectory_trace_seed
         )
-        # Add dataset-native provenance after sampling.  Every stored spatial
-        # query can now be traced to its exact normal-training sequence, video,
-        # source frame, prediction target frame and encoder (y, x) position.
+        # Record the source video, frame, and spatial position of each query.
         sampled_dataset_indices = query_trace["dataset_index"].astype(np.int64)
         source_paths = [train_dataset.samples[int(index)] for index in sampled_dataset_indices]
         video_names = [os.path.basename(os.path.dirname(path)) for path in source_paths]

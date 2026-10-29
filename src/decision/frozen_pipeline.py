@@ -1,9 +1,7 @@
-"""Exact frozen score path used by the KMTF-VAD manuscript.
+"""KMTF-VAD branch scoring, calibration, fusion, and temporal refinement.
 
-The module contains no training code and never reads anomaly labels.  It
-converts pixel/Memory evidence to per-branch scores, calibrates against normal
-training scores, joins reconstruction and prediction by exact frame key, uses
-one fixed dataset-level weight, and refines each video independently.
+Scores are calibrated against normal-training references. R/P branches are
+aligned by frame key, and each video is refined independently.
 """
 
 from __future__ import annotations

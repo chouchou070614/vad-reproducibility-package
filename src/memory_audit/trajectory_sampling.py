@@ -1,9 +1,4 @@
-"""Deterministic, side-effect-free query sampling for Memory trajectory audit.
-
-This module deliberately owns its own ``RandomState``.  It therefore never
-advances NumPy's global RNG or PyTorch's RNG and cannot change the training or
-MiniBatchKMeans trajectory that it observes.
-"""
+"""Sample memory-analysis queries with a local, seeded NumPy random generator."""
 
 from __future__ import annotations
 
@@ -76,8 +71,7 @@ class DeterministicPrioritySampler:
         if self._queries.shape[0] == 0:
             raise ValueError("no queries were observed")
 
-        # Stable provenance order makes the NPZ easy to diff and audit.  The
-        # priority values remain saved, so the sampling decision is reproducible.
+        # Store queries in source order with their sampling priorities.
         order = np.argsort(self._metadata["global_query_index"], kind="mergesort")
         queries = self._queries[order]
         priorities = self._priorities[order]

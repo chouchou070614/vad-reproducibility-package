@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run and freeze the one required Ped2-P same-trajectory Memory audit."""
+"""Run the Ped2 prediction memory-trajectory analysis and save its outputs."""
 
 from __future__ import annotations
 

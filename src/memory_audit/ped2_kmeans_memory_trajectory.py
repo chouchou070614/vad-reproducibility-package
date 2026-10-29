@@ -1,8 +1,6 @@
-"""Ped2 K-means Memory initialization with observational trajectory export.
+"""Build K-means memory centers and record a sample of normal-training queries.
 
-The K-means calls, parameters, query order and returned centers match the
-source ``ped2_kmeans_memory.py``.  The only addition is a deterministic query
-subsample captured alongside the same all-query traversal.
+Sampling uses a local random generator during the all-query traversal.
 """
 
 from __future__ import annotations
@@ -61,8 +59,7 @@ def build_kmeans_memory(
             queries = queries.view(-1, queries.size(-1))
             queries_numpy = queries.cpu().numpy()
 
-            # This is deliberately the same partial_fit call and order as the
-            # source implementation.  Sampling below is observational only.
+            # Update centers in query order before sampling for analysis.
             kmeans.partial_fit(queries_numpy)
 
             if sampler is None:

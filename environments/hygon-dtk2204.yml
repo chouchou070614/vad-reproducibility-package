@@ -10,5 +10,4 @@ dependencies:
   - matplotlib=3.5
   - pillow
   - pip
-# PyTorch 1.10.0 for DTK 22.04 must be loaded from the cluster vendor module.
-# It is intentionally not replaced by a standard CUDA wheel.
+# Load PyTorch 1.10.0 for DTK 22.04 from the cluster vendor module.

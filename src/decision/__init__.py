@@ -1,4 +1,4 @@
-"""Frozen KMTF-VAD score-processing implementation."""
+"""KMTF-VAD score processing."""
 
 from .frozen_pipeline import (
     DATASET_CONFIGS,

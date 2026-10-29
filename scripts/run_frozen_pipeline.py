@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the frozen decision path from exported normal/test branch evidence."""
+"""Fuse exported reconstruction and prediction components into anomaly scores."""
 
 from __future__ import annotations
 

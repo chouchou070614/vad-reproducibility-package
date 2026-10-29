@@ -1,4 +1,4 @@
-"""Torch-free production identity and manifest helpers for COND01."""
+"""Metadata and file-manifest helpers for the Ped2 memory-trajectory analysis."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ def atomic_json(path: Path, value: object) -> None:
 
 
 def report_passed(value: object) -> bool:
-    """Match the production runner's strict JSON-boolean gate."""
+    """Read a completion flag or status from a report."""
     if not isinstance(value, dict):
         return False
     for key in ("overall_pass", "complete", "valid", "passed"):
@@ -46,13 +46,7 @@ def report_passed(value: object) -> bool:
 
 
 def tag_evidence_identity(path: Path, task_id: str) -> None:
-    """Embed the auxiliary trajectory identity in an exported raw NPZ.
-
-    ``ncbaf_v2.infer_family`` reads metadata from the NPZ before falling back
-    to path names.  Embedding the family makes discovery deterministic even if
-    the task directory is copied or renamed.  No score, label, feature or
-    training value is changed.
-    """
+    """Add trajectory metadata to the NPZ and its profile file."""
     if task_id != TASK_ID:
         raise ValueError("unexpected task id: %s" % task_id)
     with np.load(str(path), allow_pickle=False) as source:
@@ -95,7 +89,7 @@ def tag_evidence_identity(path: Path, task_id: str) -> None:
 
 
 def validate_outer_manifest_gate(task_dir: Path, manifest_path: Path) -> None:
-    """Dry-run the exact required-file/hash portion of the outer gate."""
+    """Check required trajectory files against the manifest hashes."""
     state_path = task_dir / "artifacts/memory_trajectory/trajectory_state.json"
     state = json.loads(state_path.read_text(encoding="utf-8"))
     names = state.get("files")

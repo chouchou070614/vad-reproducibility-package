@@ -1,8 +1,6 @@
-"""Recombine already-computed MNAD pixel/memory scores without model inference.
+"""Evaluate pixel/memory score mixtures from saved components.
 
-This is intentionally a diagnostic tool.  Reported experiments should use an
-alpha fixed before looking at test labels; for Avenue the independent MNADrc
-reproduction used alpha=0.7 for both P and R.
+The alpha sweep reports AUROC using the stored evaluation labels.
 """
 import argparse
 from pathlib import Path

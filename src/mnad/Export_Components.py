@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
-"""Export label-free train-normal evidence and matching raw test evidence.
+"""Export per-frame pixel errors and memory distances for each branch.
 
-The official MNAD evaluators min-max normalise inside every test video.  That
-representation cannot be compared directly with a normal training
-distribution.  This exporter therefore preserves the raw per-frame pixel
-error/PSNR and nearest-memory distance.  It also recreates the official
-per-video score for audit purposes, but NCBAF calibration must use the raw
-arrays only.
+Training exports can include sampled query features. Test exports include
+frame labels for evaluation.
 """
 
 from __future__ import annotations
