@@ -44,7 +44,7 @@ def MemoryLoss(memory):
 
     m, d = memory.size()
     memory_t = torch.t(memory)
-    similarity = (torch.matmul(memory, memory_t))/2 + 1/2 # 30X30
+    similarity = (torch.matmul(memory, memory_t))/2 + 1/2
     identity_mask = torch.eye(m, device=memory.device, dtype=memory.dtype)
     sim = torch.abs(similarity - identity_mask)
     

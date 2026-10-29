@@ -71,7 +71,6 @@ test_dataset = DataLoader(test_folder, transforms.Compose([
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1,num_pred = 0)
 
 test_size = len(test_dataset)
-print(test_size)
 test_batch = data.DataLoader(test_dataset, batch_size = args.test_batch_size, 
                              shuffle=False, num_workers=args.num_workers_test, drop_last=False)
 
@@ -150,6 +149,5 @@ anomaly_score_total_list = np.asarray(anomaly_score_total_list)
 
 accuracy = AUC(anomaly_score_total_list, np.expand_dims(1-labels_list, 0))
 
-print('The result of ', args.dataset_type)
 print('AUC: ', accuracy*100, '%')
 

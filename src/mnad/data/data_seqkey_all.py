@@ -32,10 +32,8 @@ def default_loader(path):
     
 def make_dataset(dir, class_to_idx):
     frames = []
-    print(sorted(class_to_idx.keys()))
     dir = os.path.expanduser(dir)
     for target in sorted(class_to_idx.keys()):
-        print(target)
         d = os.path.join(dir, target)
         if not os.path.isdir(d):
             continue

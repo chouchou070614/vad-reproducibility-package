@@ -137,7 +137,6 @@ wandb.init(project="mnad", mode="online" if args.wandb else "disabled")
 
 train_folder = os.path.join(args.dataset_path, args.dataset_type, "training", "frames")
 test_folder = os.path.join(args.dataset_path, args.dataset_type, "testing", "frames")
-print(train_folder)
 train_dataset = DataLoader(
     train_folder,
     transforms.Compose([transforms.ToTensor()]),
@@ -145,7 +144,6 @@ train_dataset = DataLoader(
     resize_width=args.w,
     time_step=args.t_length - 1,
 )
-print("Train loader done")
 test_dataset = DataLoader(
     test_folder,
     transforms.Compose([transforms.ToTensor()]),
@@ -153,7 +151,6 @@ test_dataset = DataLoader(
     resize_width=args.w,
     time_step=args.t_length - 1,
 )
-print("test loader done")
 print("Train Size:" + str(len(train_dataset)))
 print("Test Size:" + str(len(test_dataset)))
 train_batch = data.DataLoader(
@@ -184,7 +181,6 @@ model.to(device)
 if args.wandb:
     wandb.watch(model)
 print(model)
-print("CP 0")
 
 log_dir = Path("./exp") / args.dataset_type / args.exp_dir
 log_dir.mkdir(parents=True, exist_ok=True)
@@ -398,8 +394,6 @@ for epoch in range(args.epochs):
             loss_pixel.item(), compactness_loss.item(), separateness_loss.item()
         )
     )
-    print("Memory_items:")
-    print(m_items)
     print("Epoch time taken:", str(epoch_end - epoch_start))
     print("----------------------------------------")
 

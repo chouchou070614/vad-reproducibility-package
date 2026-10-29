@@ -87,15 +87,12 @@ print('Using device:', device)
 
 train_folder = args.dataset_path+'/'+args.dataset_type+"/training/frames"
 test_folder = args.dataset_path+'/'+args.dataset_type+"/testing/frames"
-print(train_folder)
 train_dataset = DataLoader(train_folder, transforms.Compose([
              transforms.ToTensor(),          
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
-print("Train loader done")
 test_dataset = DataLoader(test_folder, transforms.Compose([
              transforms.ToTensor(),            
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
-print("test loader done")
 train_size = len(train_dataset)
 test_size = len(test_dataset)
 print("Train Size:" + str(train_size))
@@ -161,8 +158,6 @@ for epoch in range(args.epochs):
     print('----------------------------------------')
     print('Epoch:', epoch+1)
     print('Loss: Reconstruction {:.6f}/ Compactness {:.6f}/ Separateness {:.6f}'.format(loss_pixel.item(), compactness_loss.item(), separateness_loss.item()))
-    print('Memory_items:')
-    print(m_items)
     print("Epoch time taken:", str(epoch_end-epoch_start))
     print('----------------------------------------')
     

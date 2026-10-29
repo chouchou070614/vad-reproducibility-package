@@ -126,7 +126,6 @@ model.eval()
 for k,(imgs) in enumerate(test_batch):
 
     if k == label_length-0*(video_num+1):
-        print(k,label_length)
         video_num += 1
         label_length += videos[os.path.basename(videos_list[video_num])]['length']
 
@@ -178,7 +177,6 @@ np.savez(
 
 accuracy = AUC(anomaly_score_total_list, np.expand_dims(labels_list, 0))
 
-print('The result of ', args.dataset_type)
 print('AUC: ', accuracy*100, '%')
 print('Scores saved to:', score_output)
 

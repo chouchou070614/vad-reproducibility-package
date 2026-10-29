@@ -164,6 +164,5 @@ plt.show()
 accuracy = AUC(anomaly_score_total_list, np.expand_dims(1-labels_list, 0))
 
 print(t2-t1)
-print('The result of ', args.dataset_type)
 print('AUC: ', accuracy*100, '%')
 

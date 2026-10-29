@@ -110,7 +110,6 @@ for video in sorted(videos_list):
     psnr_list[video_name] = []
     feature_distance_list[video_name] = []
 
-print(len(videos_list))
 label_length = 0
 video_num = 0
 label_length += videos[videos_list[video_num].split('/')[-1]]['length']
@@ -121,7 +120,6 @@ model.eval()
 for k,(imgs) in enumerate(test_batch):
 
     if k == label_length-4*(video_num+1):
-        print(k,label_length)
         video_num += 1
         label_length += videos[videos_list[video_num].split('/')[-1]]['length']
 
@@ -156,5 +154,4 @@ anomaly_score_total_list = np.asarray(anomaly_score_total_list)
 
 accuracy = AUC(anomaly_score_total_list, np.expand_dims(1-labels_list, 0))
 
-print('The result of ', args.dataset_type)
 print('AUC: ', accuracy*100, '%')

@@ -44,7 +44,7 @@ def MemoryLoss(memory):
 
     m, d = memory.size()
     memory_t = torch.t(memory)
-    similarity = (torch.matmul(memory, memory_t))/2 + 1/2 # 30X30
+    similarity = (torch.matmul(memory, memory_t))/2 + 1/2
     identity_mask = torch.eye(m, device=memory.device, dtype=memory.dtype)
     sim = torch.abs(similarity - identity_mask)
     
@@ -194,7 +194,6 @@ class Memory(nn.Module):
             mem_dist = torch.argmax(softmax_score_memory,dim = 1)
             mem_dist = F.one_hot(mem_dist, num_classes = 10)
             mem_dist = torch.sum(mem_dist, dim = 0)
-            print(mem_dist)
 
 
             query_reshape = query.contiguous().view(batch_size*h*w, dims)

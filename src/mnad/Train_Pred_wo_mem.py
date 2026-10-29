@@ -87,15 +87,12 @@ print('Using device:', device)
 
 train_folder = args.dataset_path+'/'+args.dataset_type+"/training/frames"
 test_folder = args.dataset_path+'/'+args.dataset_type+"/testing/frames"
-print(train_folder)
 train_dataset = DataLoader(train_folder, transforms.Compose([
              transforms.ToTensor(),          
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
-print("Train loader done")
 test_dataset = DataLoader(test_folder, transforms.Compose([
              transforms.ToTensor(),            
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
-print("test loader done")
 train_size = len(train_dataset)
 test_size = len(test_dataset)
 print("Train Size:" + str(train_size))
@@ -119,7 +116,6 @@ model.to(device)
 wandb.watch(model)
 
 print(model)
-print("CP 0")
 log_dir = os.path.join('./exp', args.dataset_type, args.exp_dir)
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)

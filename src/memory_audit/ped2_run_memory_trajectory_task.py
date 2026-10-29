@@ -649,7 +649,7 @@ def main() -> None:
         write_json(task_dir / "status.json", {
             "task_id": args.task_id,
             "state": "completed",
-            "stage": "training, trajectory, inference and evidence all validated",
+            "stage": "validation complete",
             "time": now(),
             "loss_epochs": len(loss_rows),
             "trajectory": trajectory_report,

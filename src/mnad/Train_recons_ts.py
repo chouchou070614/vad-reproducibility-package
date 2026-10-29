@@ -150,8 +150,6 @@ for epoch in range(args.epochs):
     print('----------------------------------------')
     print('Epoch:', epoch+1)
     print('Loss: Reconstruction {:.6f}/ Compactness {:.6f}/ Separateness {:.6f}'.format(loss_pixel.item(), compactness_loss.item(), separateness_loss.item()))
-    print('Memory_items:')
-    print(m_items)
     print('----------------------------------------')
     print(f'Train loss avg: {train_loss.avg}')
 

@@ -36,7 +36,7 @@ def main():
     source = os.path.join(os.path.abspath(args.source_dataset_root), "avenue")
     target = os.path.join(os.path.abspath(args.output_dataset_root), "avenue")
     if not os.path.isfile(os.path.join(source, "READY")):
-        raise RuntimeError("Source OpenCV 3.2 extraction is not verified: {0}".format(source))
+        raise RuntimeError("Source READY marker missing: {0}".format(source))
     if os.path.exists(target):
         raise RuntimeError("Refusing to overwrite existing target: {0}".format(target))
 
@@ -96,8 +96,8 @@ def main():
         with open(os.path.join(target, "exact_input_manifest.json"), "w") as stream:
             json.dump(manifest, stream, indent=2, sort_keys=True)
         with open(os.path.join(target, "READY"), "w") as stream:
-            stream.write("verified OpenCV 3.2 exact pixels\n")
-        print("Exact-pixel dataset verified: {0}".format(target))
+            stream.write("PNG conversion complete\n")
+        print("PNG conversion complete: {0}".format(target))
     except Exception:
         if os.path.isdir(target):
             shutil.rmtree(target)
