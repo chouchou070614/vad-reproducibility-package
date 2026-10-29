@@ -57,7 +57,6 @@ class Encoder(torch.nn.Module):
         return tensorConv4, tensorConv1, tensorConv2, tensorConv3
 
     
-    
 class Decoder(torch.nn.Module):
     def __init__(self, t_length = 5, n_channel =3):
         super(Decoder, self).__init__()
@@ -104,7 +103,6 @@ class Decoder(torch.nn.Module):
         self.moduleDeconv1 = Gen(128,n_channel,64)
         
         
-        
     def forward(self, x, skip1, skip2, skip3):
         
         tensorConv = self.moduleConv(x)
@@ -125,7 +123,6 @@ class Decoder(torch.nn.Module):
         return output
     
 
-
 class convAE(torch.nn.Module):
     def __init__(self, n_channel =3,  t_length = 5, memory_size = 10, feature_dim = 512, key_dim = 512, temp_update = 0.1, temp_gather=0.1):
         super(convAE, self).__init__()
@@ -144,7 +141,6 @@ class convAE(torch.nn.Module):
             
             return output, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, separateness_loss, compactness_loss
         
-        #test
         else:
             updated_fea, keys, softmax_score_query, softmax_score_memory,query, top1_keys, keys_ind, compactness_loss = self.memory(fea, keys, train)
             output = self.decoder(updated_fea, skip1, skip2, skip3)
@@ -152,8 +148,3 @@ class convAE(torch.nn.Module):
             return output, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, query, top1_keys, keys_ind, compactness_loss
         
                                           
-
-
-
-    
-    

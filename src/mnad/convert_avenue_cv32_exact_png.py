@@ -1,11 +1,5 @@
 #!/usr/bin/env python
-"""Materialize paper-era Avenue tensors as lossless 256x256 PNG frames.
-
-Run this with the isolated Python 3.5 / OpenCV 3.2 environment.  The source is
-the JPEG frame set decoded and encoded by that same environment, matching the
-two image operations used by the original MNAD input loader: JPEG decode and
-bilinear resize.  PNG is used only as a lossless cache of the resulting pixels.
-"""
+"""Convert Avenue JPEG frames to 256x256 PNGs using Python 3.5 and OpenCV 3.2."""
 from __future__ import print_function
 
 import argparse

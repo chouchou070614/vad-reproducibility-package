@@ -222,7 +222,7 @@
   "artifact_checksums": {
     "ped2_R_model": "b02373840ea7b0db20c148f25566e9029c94c4d34ce8f9894d32c7a3cda3931f",
     "ped2_P_model": "5107baf1b670060ab9d7c7ddf1d60d0beeeba1375d49be52aa0307a94ae95cdf",
-    "note": "Paths removed for anonymous release; hashes identify the measured checkpoints."
+    "note": "Checkpoint SHA-256 hashes."
   },
   "protocol": {
     "batch_size": 8,

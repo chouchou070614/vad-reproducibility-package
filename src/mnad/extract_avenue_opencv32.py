@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-"""Extract CUHK Avenue with the paper-era OpenCV 3.2 runtime.
-
-This script is intentionally compatible with Python 3.5.  It writes to a new
-dataset root and refuses to overwrite an existing Avenue directory.
-"""
+"""Extract Avenue video frames using Python 3.5 and OpenCV 3.2."""
 from __future__ import print_function
 
 import argparse

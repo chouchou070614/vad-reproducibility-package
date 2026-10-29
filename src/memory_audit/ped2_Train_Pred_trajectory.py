@@ -101,15 +101,15 @@ if args.scheduler_t_max is None:
 if args.scheduler_t_max < args.epochs:
     parser.error("--scheduler_t_max must be greater than or equal to --epochs")
 if not args.kmeans_init:
-    parser.error("this instrumented task requires --kmeans_init")
+    parser.error("--kmeans_init required")
 if not 1 <= args.kmeans_warmup_epochs < args.epochs:
     parser.error("--kmeans_warmup_epochs must be at least 1 and smaller than --epochs")
 if args.save_every < 0:
     parser.error("--save_every must be non-negative")
 if args.freeze_memory_after_kmeans:
-    parser.error("the representative trajectory must be KMemory-Continue, not Freeze")
+    parser.error("continued memory updates required")
 if args.dataset_type != "ped2":
-    parser.error("this audited representative trajectory is Ped2 only")
+    parser.error("dataset_type=ped2 required")
 if args.trajectory_sample_count <= 0:
     parser.error("--trajectory_sample_count must be positive")
 
@@ -368,13 +368,13 @@ for epoch in range(args.epochs):
         trajectory_state["query_count_full"] = int(query_count)
         trajectory_state["query_sample_count"] = int(len(query_trace["queries"]))
         trajectory_state["actual_kmeans_centers_representation"] = (
-            "actual normalized centers assigned to Memory"
+            "L2-normalized K-means centers"
         )
         trajectory_state["raw_kmeans_centers_representation"] = (
-            "supplemental sklearn MiniBatchKMeans.cluster_centers_ before F.normalize"
+            "MiniBatchKMeans.cluster_centers_ before normalization"
         )
         trajectory_state["post_replacement_memory_representation"] = (
-            "actual centers after the source F.normalize(dim=1), exactly assigned to Memory"
+            "L2-normalized K-means centers"
         )
         trajectory_state["completed_stages"].extend([
             "actual_kmeans_centers",

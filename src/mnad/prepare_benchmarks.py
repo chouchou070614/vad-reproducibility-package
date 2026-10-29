@@ -1,13 +1,4 @@
-"""Prepare public VAD benchmark archives for this MNAD implementation.
-
-The training code does not consume videos directly.  It needs this layout:
-    dataset/<name>/{training,testing}/frames/<video>/000.jpg
-
-This script converts the official UCSD Ped2 TIFF files and Avenue AVI videos
-to that layout.  For ShanghaiTech it merges the two Kaggle ZIP archives and
-restores the original 330-training/107-testing split from the sequence IDs.
-It never overwrites an existing prepared dataset.
-"""
+"""Extract benchmark frames into dataset/<name>/<split>/frames/<video>/."""
 import argparse
 import shutil
 import tarfile
@@ -88,7 +79,7 @@ def choose_directory(root: Path, wanted_name: str) -> Path:
 def ensure_empty_target(target: Path) -> None:
     if target.exists():
         raise FileExistsError(
-            f"Prepared dataset already exists: {target}. Remove it manually only if you intend to rebuild it.")
+            f"Dataset directory exists: {target}.")
 
 
 def prepare_ped2(archive: Path, target: Path) -> None:
@@ -128,14 +119,7 @@ def prepare_avenue(archive: Path, target: Path) -> None:
 
 
 def prepare_shanghai(archives, target: Path) -> None:
-    """Restore the original ShanghaiTech split from the two Kaggle ZIPs.
-
-    The mirror redistributes all 437 sequences across two arbitrary packages.
-    Original normal-training IDs end in a three-digit suffix (for example
-    ``01_002``), while original anomaly-testing IDs end in a four-digit suffix
-    (for example ``01_0014``).  This recovers exactly 330 training sequences
-    and 107 testing sequences / 40,791 testing frames used by MNAD labels.
-    """
+    """Build the ShanghaiTech split from sequence-ID suffixes."""
     ensure_empty_target(target)
     sequence_names = {"training": set(), "testing": set()}
     frame_counts = {"training": 0, "testing": 0}
@@ -209,7 +193,7 @@ def verify(dataset_root: Path, dataset_type: str) -> None:
     if len(test_images) != len(labels):
         raise RuntimeError(
             f"{dataset_type}: {len(test_images)} testing frames but {len(labels)} built-in labels. "
-            "Do not train until this mismatch is resolved.")
+            "Frame/label count mismatch.")
     print(f"{dataset_type}: prepared and verified ({len(test_images)} testing frames)")
 
 

@@ -19,14 +19,13 @@ import math
 from collections import OrderedDict
 import copy
 import time
-from model.utils_pred import DataLoader #引入训练程序，负责整理视频图片
+from model.utils_pred import DataLoader
 from model.Prediction import *
 from sklearn.metrics import roc_auc_score
 from utils import *
 from kmeans_memory import build_kmeans_memory
 import random
 from wandb_compat import wandb
-# from torchsummary import summary
 
 import argparse
 
@@ -64,7 +63,7 @@ parser.add_argument('--t_length', type=int, default=5, help='length of the frame
 parser.add_argument('--fdim', type=int, default=512, help='channel dimension of the features')
 parser.add_argument('--mdim', type=int, default=512, help='channel dimension of the memory items')
 parser.add_argument('--msize', type=int, default=10, help='number of the memory items')
-parser.add_argument('--alpha', type=float, default=0.6, help='weight for the anomality score')
+parser.add_argument('--alpha', type=float, default=0.6, help='anomaly-score weight')
 parser.add_argument('--num_workers', type=int, default=2, help='number of workers for the train loader')
 parser.add_argument('--num_workers_test', type=int, default=1, help='number of workers for the test loader')
 parser.add_argument('--dataset_type', type=str, default='ped2', help='type of dataset: ped2, avenue, shanghai')
@@ -91,7 +90,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 if args.gpus:
     os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(args.gpus)
 
-torch.backends.cudnn.enabled = True # make sure to use cudnn for computational performance
+torch.backends.cudnn.enabled = True
 if args.device == 'auto':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 else:
@@ -106,7 +105,6 @@ wandb.init(project='mnad', mode='online' if args.wandb else 'disabled')
 train_folder = os.path.join(args.dataset_path, args.dataset_type, "training", "frames")
 test_folder = os.path.join(args.dataset_path, args.dataset_type, "testing", "frames")
 print(train_folder)
-# Loading dataset
 train_dataset = DataLoader(train_folder, transforms.Compose([
              transforms.ToTensor(),          
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
@@ -126,28 +124,7 @@ kmeans_batch = data.DataLoader(train_dataset, batch_size=args.batch_size,
 test_batch = data.DataLoader(test_dataset, batch_size = args.test_batch_size, 
                              shuffle=False, num_workers=args.num_workers_test, drop_last=False)
 
-# sweep_config = {
-#     'method': 'random', #grid, random
-#     'metric': {
-#         'name': '',
-#         'goal': 'minimize'   
-#     },
-#     'parameters': {
-#         'learning_rate': {
-#             'values': [0.1, 0.01,0.001]
-#         },
-#         'optimizer': {
-#             'values': ['adam', 'sgd']
-#         },
-#     }
-# }
-# config_defaults = {
-#     'learning_rate': args.lr,
-#     'optimizer': 'adam',
-# }
 
-# wandb.init(config=config_defaults)
-# Model setting
 model = convAE(args.c, args.t_length, args.msize, args.fdim, args.mdim)
 model_parameters = filter(lambda p: p.requires_grad, model.parameters())
 params_count = sum([np.prod(p.size()) for p in model_parameters])
@@ -155,7 +132,6 @@ print(params_count)
 params_encoder =  list(model.encoder.parameters()) 
 params_decoder = list(model.decoder.parameters())
 params = params_encoder + params_decoder
-# print("Params: ", params.len())
 optimizer = torch.optim.Adam(params, lr = args.lr)
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,T_max =args.epochs)
 model.to(device)
@@ -164,23 +140,14 @@ if args.wandb:
 
 print(model)
 print("CP 0")
-# Report the training process
 log_dir = os.path.join('./exp', args.dataset_type, args.exp_dir)
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
-# print("CP MKDIR")
-# orig_stdout = sys.stdout
-# print("CP STDOUT")
-# f = open(os.path.join(log_dir, 'log.txt'),'w')
-# print("CP OPEN 1")
-# sys.stdout= f
-# print("CPOPEN")
 
 loss_func_mse = nn.MSELoss(reduction='none')
 
-# Training
 
-m_items = F.normalize(torch.rand((args.msize, args.mdim), dtype=torch.float, device=device), dim=1) # Initialize the memory items
+m_items = F.normalize(torch.rand((args.msize, args.mdim), dtype=torch.float, device=device), dim=1)
 for epoch in range(args.epochs):
     epoch_start = time.time()
     labels_list = []
@@ -234,11 +201,7 @@ for epoch in range(args.epochs):
     print('----------------------------------------')
     
 print('Training is finished')
-# Save the model and the memory items
 print(log_dir)
 torch.save(model, os.path.join(log_dir, 'model.pth'))
 torch.save(m_items, os.path.join(log_dir, 'keys.pt'))
 wandb.finish()
-    
-# sys.stdout = orig_stdout
-# f.close()

@@ -61,8 +61,6 @@ if args.plan_output:
     if len(rows) < 2:
         raise ValueError('At least two coarse points are required for refinement')
     pairs = list(zip(rows[:-1], rows[1:]))
-    # Select the strongest adjacent pair, rather than two unrelated high
-    # values, so the unit-step sweep fills one continuous interval.
     left, right = max(
         pairs,
         key=lambda pair: (pair[0]['k_fusion_gaussian_auc'] +

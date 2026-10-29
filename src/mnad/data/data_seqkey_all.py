@@ -10,7 +10,6 @@ import sys
 
 
 def pil_loader(path):
-    # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
     with open(path, 'rb') as f:
         img = Image.open(f)
         return img.convert('RGB')
@@ -21,7 +20,6 @@ def accimage_loader(path):
     try:
         return accimage.Image(path)
     except IOError:
-        # Potentially a decoding problem, fall back to PIL.Image
         return pil_loader(path)
 
 
@@ -41,15 +39,9 @@ def make_dataset(dir, class_to_idx):
         d = os.path.join(dir, target)
         if not os.path.isdir(d):
             continue
-#         new_fnames = []
               
         for root, _, fnames in sorted(os.walk(d)):
             for fname in sorted(fnames):
-#                 fname = fname.split('.')[0]
-#                 seq = fname.split('_')[0][1:]
-#                 fname = fname.split('_')[1]
-#                 fname = fname.zfill(4)
-#                 new_fnames.append('V'+seq+'_'+fname+'.png')
                 
                 path = os.path.join(root, fname)
                 frames.append(path)
@@ -69,31 +61,19 @@ class DatasetFolder(data.Dataset):
         self.root = root
         self.loader = loader
         self.length = length
-#         self.stride = np.random.choice(3,1) + 1
         self.classes = classes
         self.class_to_idx = class_to_idx
-#         self.samples_gt = samples[self.length:]
         self.samples = samples[:-(self.length-1)]
         
         self.samples_all = samples
         self.samples_pool = samples[1:] 
-#         self.targets = [s[1] for s in samples]
 
         self.transform = transform
         self.target_transform = target_transform
 
     def _find_classes(self, dir):
-        """
-        Finds the class folders in a dataset.
-        Args:
-            dir (string): Root directory path.
-        Returns:
-            tuple: (classes, class_to_idx) where classes are relative to (dir), and class_to_idx is a dictionary.
-        Ensures:
-            No class is a subdirectory of another.
-        """
+        """Return sorted subdirectory names and their indices."""
         if sys.version_info >= (3, 5):
-            # Faster and available in Python 3.5 and above
             classes = [d.name for d in os.scandir(dir) if d.is_dir()]
         else:
             classes = [d for d in os.listdir(dir) if os.path.isdir(os.path.join(dir, d))]
@@ -102,13 +82,7 @@ class DatasetFolder(data.Dataset):
         return classes, class_to_idx
 
     def __getitem__(self, index):
-        """
-        Args:
-            index (int): Index
-        Returns:
-            tuple: (samples, gt(+length)) 
-        
-        """
+        """Return the concatenated frame sequence at index."""
         
         
         sample = []          
@@ -130,12 +104,6 @@ class DatasetFolder(data.Dataset):
             sample.append(sample_immediate)
         
         
-#         path_gt = self.samples_gt[index]
-#         sample_gt = self.loader(path_gt)
-     
-#         if self.transform is not None:
-#             sample_gt = self.transform(sample_gt)
-        
         sample_input = sample[0]
         for i in range(self.length-1):
             sample_input = torch.cat((sample_input,sample[i+1]), dim=0)
@@ -145,9 +113,6 @@ class DatasetFolder(data.Dataset):
     def _stride(self):
         
         stride = int(np.random.choice(3,1) + 1)
-        #if stride != 1:
-#             self.samples_gt = self.samples_all[self.length*stride:]
-         #   self.samples = self.samples_all[:-(self.length*stride)]
         
         return stride
 
@@ -168,11 +133,7 @@ class DatasetFolder(data.Dataset):
 IMG_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', 'webp']
 
 
-
-
-
 class ImageFolder(DatasetFolder):
-    
     
     
     def __init__(self, root, transform=None, target_transform=None,
@@ -182,5 +143,4 @@ class ImageFolder(DatasetFolder):
                                           target_transform=target_transform)
         self.imgs = self.samples
         
-
 

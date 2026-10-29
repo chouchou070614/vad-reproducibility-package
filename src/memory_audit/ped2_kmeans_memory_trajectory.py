@@ -1,7 +1,4 @@
-"""Build K-means memory centers and record a sample of normal-training queries.
-
-Sampling uses a local random generator during the all-query traversal.
-"""
+"""Build K-means centers and sample normal-training queries."""
 
 from __future__ import annotations
 

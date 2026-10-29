@@ -1,4 +1,4 @@
-"""Summarize checkpoint score files created by the no-retraining audit."""
+"""Summarize saved checkpoint scores."""
 import argparse
 import csv
 from pathlib import Path

@@ -9,15 +9,7 @@ from natsort import natsorted
 rng = np.random.RandomState(2020)
 
 def np_load_frame(filename, resize_height, resize_width, idx):
-    """
-    Load image path and convert it to numpy.ndarray. Notes that the color channels are BGR and the color space
-    is normalized from [0, 255] to [-1, 1].
-
-    :param filename: the full path of image
-    :param resize_height: resized height
-    :param resize_width: resized width
-    :return: numpy.ndarray
-    """
+    """Load and resize a BGR image as a float32 array in [-1, 1]."""
     image_decoded = cv2.imread(filename)
     if(idx != float("inf")):
       image_decoded = random_noise(image_decoded, mode='s&p',amount=0.25)
@@ -25,8 +17,6 @@ def np_load_frame(filename, resize_height, resize_width, idx):
     image_resized = image_resized.astype(dtype=np.float32)
     image_resized = (image_resized / 127.5) - 1.0
     return image_resized
-
-
 
 
 class DataLoader(data.Dataset):
@@ -58,7 +48,7 @@ class DataLoader(data.Dataset):
         videos = glob.glob(os.path.join(self.dir, '*'))
         for video in sorted(videos):
             video_name = os.path.basename(video)
-            for i in range(len(self.videos[video_name]['frame'])-(self._time_step)+1):   #-self._time_step not needed for recons
+            for i in range(len(self.videos[video_name]['frame'])-(self._time_step)+1):
                 frames.append(self.videos[video_name]['frame'][i])
                            
         return frames               

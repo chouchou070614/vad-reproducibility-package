@@ -43,7 +43,7 @@ parser.add_argument('--t_length', type=int, default=5, help='length of the frame
 parser.add_argument('--fdim', type=int, default=512, help='channel dimension of the features')
 parser.add_argument('--mdim', type=int, default=512, help='channel dimension of the memory items')
 parser.add_argument('--msize', type=int, default=10, help='number of the memory items')
-parser.add_argument('--alpha', type=float, default=0.6, help='weight for the anomality score')
+parser.add_argument('--alpha', type=float, default=0.6, help='anomaly-score weight')
 parser.add_argument('--num_workers', type=int, default=2, help='number of workers for the train loader')
 parser.add_argument('--num_workers_test', type=int, default=1, help='number of workers for the test loader')
 parser.add_argument('--dataset_type', type=str, default='ped2', help='type of dataset: ped2, avenue, shanghai')
@@ -59,7 +59,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 if args.gpus:
     os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(args.gpus)
 
-torch.backends.cudnn.enabled = True # make sure to use cudnn for computational performance
+torch.backends.cudnn.enabled = True
 if args.device == 'auto':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 else:
@@ -71,7 +71,6 @@ print('Using device:', device)
 train_folder = args.dataset_path+args.dataset_type+"/training/frames"
 test_folder = args.dataset_path+args.dataset_type+"/testing/frames"
 
-# Loading dataset
 train_dataset = DataLoader(train_folder, transforms.Compose([
              transforms.ToTensor(),          
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1)
@@ -89,7 +88,6 @@ test_batch = data.DataLoader(test_dataset, batch_size = args.test_batch_size,
                              shuffle=False, num_workers=args.num_workers_test, drop_last=False)
 
 
-# Model setting
 model = convAE(args.c, args.t_length, args.msize, args.fdim, args.mdim)
 params_encoder =  list(model.encoder.parameters()) 
 params_decoder = list(model.decoder.parameters())
@@ -99,7 +97,6 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,T_max =args.epochs)
 model.to(device)
 
 
-# Report the training process
 log_dir = os.path.join('./exp', args.dataset_type, args.exp_dir)
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
@@ -109,9 +106,8 @@ sys.stdout= f
 
 loss_func_mse = nn.MSELoss(reduction='none')
 
-# Training
 
-m_items = F.normalize(torch.rand((args.msize, args.mdim), dtype=torch.float, device=device), dim=1) # Initialize the memory items
+m_items = F.normalize(torch.rand((args.msize, args.mdim), dtype=torch.float, device=device), dim=1)
 
 for epoch in range(args.epochs):
     labels_list = []
@@ -141,13 +137,10 @@ for epoch in range(args.epochs):
     print('----------------------------------------')
     
 print('Training is finished')
-# Save the model and the memory items
 torch.save(model, os.path.join(log_dir, 'model.pth'))
 torch.save(m_items, os.path.join(log_dir, 'keys.pt'))
     
 sys.stdout = orig_stdout
 f.close()
-
-
 
 

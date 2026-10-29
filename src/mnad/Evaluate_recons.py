@@ -40,7 +40,7 @@ parser.add_argument('--t_length', type=int, default=2, help='length of the frame
 parser.add_argument('--fdim', type=int, default=512, help='channel dimension of the features')
 parser.add_argument('--mdim', type=int, default=512, help='channel dimension of the memory items')
 parser.add_argument('--msize', type=int, default=10, help='number of the memory items')
-parser.add_argument('--alpha', type=float, default=0.6, help='weight for the anomality score')
+parser.add_argument('--alpha', type=float, default=0.6, help='anomaly-score weight')
 parser.add_argument('--th', type=float, default=0.015, help='threshold for test updating')
 parser.add_argument('--num_workers', type=int, default=2, help='number of workers for the train loader')
 parser.add_argument('--num_workers_test', type=int, default=1, help='number of workers for the test loader')
@@ -59,7 +59,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 if args.gpus:
     os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(args.gpus)
 
-torch.backends.cudnn.enabled = True # make sure to use cudnn for computational performance
+torch.backends.cudnn.enabled = True
 device = torch.device('cuda' if args.device == 'auto' and torch.cuda.is_available() else args.device if args.device != 'auto' else 'cpu')
 if device.type == 'cuda' and not torch.cuda.is_available():
     raise RuntimeError('CUDA was requested but is unavailable.')
@@ -67,7 +67,6 @@ print('Using device:', device)
 
 test_folder = os.path.join(args.dataset_path, args.dataset_type, "testing", "frames")
 
-# Loading dataset
 test_dataset = DataLoader(test_folder, transforms.Compose([
              transforms.ToTensor(),            
              ]), resize_height=args.h, resize_width=args.w, time_step=args.t_length-1,num_pred = 0)
@@ -79,7 +78,6 @@ test_batch = data.DataLoader(test_dataset, batch_size = args.test_batch_size,
 
 loss_func_mse = nn.MSELoss(reduction='none')
 
-# Loading the trained model
 if not args.model_dir or not args.m_items_dir:
     parser.error('--model_dir and --m_items_dir are required')
 model = torch_load_compat(args.model_dir, map_location=device)
@@ -109,7 +107,6 @@ labels_by_video = {}
 
 print('Evaluation of', args.dataset_type)
 
-# Setting for video anomaly detection
 for video in sorted(videos_list):
     video_name = os.path.basename(video)
     video_labels = labels[0][label_length:videos[video_name]['length']+label_length]
@@ -139,7 +136,6 @@ for k,(imgs) in enumerate(test_batch):
     mse_imgs = torch.mean(loss_func_mse((outputs[0]+1)/2, (imgs[0]+1)/2)).item()
     mse_feas = compactness_loss.item()
     
-    # Calculating the threshold for updating at the test time
     point_sc = point_score(outputs, imgs)
 
     if  point_sc < args.th:
@@ -152,7 +148,6 @@ for k,(imgs) in enumerate(test_batch):
     feature_distance_list[current_video_name].append(mse_feas)
 
 
-# Measuring the abnormality score and the AUC
 anomaly_scores_by_video = []
 for video in sorted(videos_list):
     video_name = os.path.basename(video)

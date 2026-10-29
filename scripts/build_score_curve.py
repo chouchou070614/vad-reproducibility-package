@@ -115,7 +115,7 @@ metadata = {
     "figure": str(FIGURE.relative_to(ROOT)),
     "figure_sha256": sha256(FIGURE),
     "score_fields": ["ECDF_R", "ECDF_P", "ECDF_Final_temporal"],
-    "note": "Continuous aligned frames; shaded red interval and GT strip are derived directly from stored labels.",
+    "note": "Ground truth from stored labels.",
 }
 (EVIDENCE_DIR / "score_curve_manifest.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 print(FIGURE)

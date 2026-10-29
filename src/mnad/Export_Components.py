@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Export per-frame pixel errors and memory distances for each branch.
-
-Training exports can include sampled query features. Test exports include
-frame labels for evaluation.
-"""
+"""Export branch errors, memory distances, and frame metadata."""
 
 from __future__ import annotations
 
@@ -37,7 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--alpha", type=float, default=None)
     parser.add_argument(
         "--feature_sample_count", type=int, default=50000,
-        help="number of normal-training query features to retain; testing never samples features",
+        help="query sample count for the training split",
     )
     parser.add_argument("--feature_sample_seed", type=int, default=2020)
     parser.add_argument("--device", choices=("cuda", "cpu"), default="cuda")

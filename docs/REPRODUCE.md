@@ -1,4 +1,4 @@
-# Reproducing the experiments
+# Training and evaluation
 
 Install the environment in the [README](../README.md#setup) and prepare the
 [datasets and test labels](DATASETS.md). Run these commands from the repository
@@ -6,8 +6,7 @@ root. Use absolute paths for data, checkpoints, and outputs.
 
 ## Branch training
 
-The example below uses Ped2; change `DATASET` to `avenue` or `shanghai` as needed.
-Training parameters are read from `configs/BRANCH_TRAINING.json`.
+Datasets: `ped2`, `avenue`, `shanghai`. Parameters: `configs/BRANCH_TRAINING.json`.
 
 ```bash
 DATASET=ped2
@@ -26,9 +25,7 @@ Add `--dry-run` to `Train.py` or `Evaluate.py` to inspect the command.
 
 ## Component export
 
-Export both branches on normal training frames and test frames. Each NPZ
-contains frame identifiers, pixel errors, and memory distances; test exports
-also contain the frame labels.
+Export R/P components for both splits. Test exports include frame labels.
 
 ```bash
 for BRANCH in R P; do
@@ -50,28 +47,22 @@ python Fuse.py --dataset "$DATASET" \
   --output "$RUN_ROOT/final_scores.npz"
 ```
 
-Fusion aligns R/P frame keys, applies normal-training ECDF calibration,
-combines the branches, and refines scores within each video. Runtime settings
-are defined in `DATASET_CONFIGS` in `src/decision/frozen_pipeline.py` and
-recorded in `configs/DATASET_CONFIG.json`.
-
-The pipeline uses complete-video normalization and is intended for offline
-evaluation.
+Runtime settings: `DATASET_CONFIGS` in `src/decision/frozen_pipeline.py`.
+The pipeline uses offline, complete-video normalization.
 
 ## Figures and checks
 
-Rebuild the figures from the supplied data in `evidence/`:
+Figure inputs: `evidence/`. Outputs: `figures/`.
 
 ```bash
 python scripts/build_qualitative_figure.py
 python scripts/build_score_curve.py
 ```
 
-Outputs are written to `figures/`. Run the entry-point and score-processing tests with:
+Run the entry-point and score-processing tests:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-`src/memory_audit/` contains additional development scripts that depend on
-runner modules and templates not included in this repository.
+`src/memory_audit/` requires the original experiment runner and task templates.

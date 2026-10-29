@@ -12,9 +12,7 @@ conda env create -f environments/nvidia-cu118.yml
 conda activate kmtf-vad-cu118
 ```
 
-Prepare Ped2, Avenue, or ShanghaiTech as described in
-[Dataset preparation](docs/DATASETS.md). Full datasets and pretrained
-checkpoints are not included.
+Prepare the dataset and test labels: [Dataset preparation](docs/DATASETS.md).
 
 ## Training
 
@@ -33,8 +31,7 @@ Use `ped2`, `avenue`, or `shanghai` for `--dataset`. Training parameters are in
 
 ## Evaluation
 
-Follow [Reproducing the experiments](docs/REPRODUCE.md) to export branch
-components, fuse scores, and regenerate the paper figures.
+[Evaluation commands](docs/REPRODUCE.md): component export, score fusion, and figures.
 
 This implementation builds on MNAD and MNADrc; see the
 [third-party notice](licenses/THIRD_PARTY_NOTICE.md).

@@ -1,7 +1,4 @@
-"""Evaluate pixel/memory score mixtures from saved components.
-
-The alpha sweep reports AUROC using the stored evaluation labels.
-"""
+"""Report AUROC for pixel/memory mixtures using saved scores and labels."""
 import argparse
 from pathlib import Path
 
@@ -21,8 +18,8 @@ required = ("pixel_scores", "memory_scores", "labels")
 missing = [key for key in required if key not in data.files]
 if missing:
     raise KeyError(
-        f"{args.input} is an older score file missing {missing}. "
-        "Re-run Evaluate_Pred.py/Evaluate_recons.py once; retraining is not needed.")
+        f"{args.input}: missing score fields {missing}. "
+        "Run Evaluate_Pred.py/Evaluate_recons.py to export components.")
 
 pixel = np.asarray(data["pixel_scores"], dtype=np.float64)
 memory = np.asarray(data["memory_scores"], dtype=np.float64)

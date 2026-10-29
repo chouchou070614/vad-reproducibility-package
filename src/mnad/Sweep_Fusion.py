@@ -1,7 +1,4 @@
-"""Evaluate fusion-weight sensitivity using saved R/P scores and labels.
-
-Write AUROC values for the supplied beta values to a CSV file.
-"""
+"""Write fusion-weight AUROC results from saved R/P scores and labels to CSV."""
 import argparse
 import csv
 from pathlib import Path

@@ -17,5 +17,5 @@
     "ECDF_P",
     "ECDF_Final_temporal"
   ],
-  "note": "Continuous aligned frames; shaded red interval and GT strip are derived directly from stored labels."
+  "note": "Ground truth from stored labels."
 }

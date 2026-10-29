@@ -1,8 +1,4 @@
-"""KMTF-VAD branch scoring, calibration, fusion, and temporal refinement.
-
-Scores are calibrated against normal-training references. R/P branches are
-aligned by frame key, and each video is refined independently.
-"""
+"""KMTF-VAD branch scoring, ECDF calibration, fusion, and temporal refinement."""
 
 from __future__ import annotations
 
@@ -107,7 +103,7 @@ def exact_align(
     p_frame: Sequence[int],
     p_score: Sequence[float],
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """Join R/P only on the exact ``(video_name, frame_index)`` intersection."""
+    """Align R/P scores on shared video/frame keys."""
     rv, rf, rs = np.asarray(r_video).astype(str), np.asarray(r_frame), _one_dimensional("r_score", r_score)
     pv, pf, ps = np.asarray(p_video).astype(str), np.asarray(p_frame), _one_dimensional("p_score", p_score)
     if rv.size != rf.size or rv.size != rs.size or pv.size != pf.size or pv.size != ps.size:

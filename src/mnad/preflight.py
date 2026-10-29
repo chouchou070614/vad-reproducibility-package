@@ -1,4 +1,4 @@
-"""Fail-fast checks to run after installation and before a server training job."""
+"""Check the environment, dataset layout, and model forward passes."""
 import argparse
 from pathlib import Path
 import sys

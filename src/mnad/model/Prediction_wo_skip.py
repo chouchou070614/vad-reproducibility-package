@@ -57,7 +57,6 @@ class Encoder(torch.nn.Module):
         return tensorConv4, tensorConv1, tensorConv2, tensorConv3
 
     
-    
 class Decoder(torch.nn.Module):
     def __init__(self, t_length = 5, n_channel =3):
         super(Decoder, self).__init__()
@@ -104,28 +103,23 @@ class Decoder(torch.nn.Module):
         self.moduleDeconv1 = Gen(64,n_channel,64)
         
         
-        
     def forward(self, x):
         
         tensorConv = self.moduleConv(x)
 
         tensorUpsample4 = self.moduleUpsample4(tensorConv)
-        # cat4 = torch.cat((skip3, tensorUpsample4), dim = 1)
         
         tensorDeconv3 = self.moduleDeconv3(tensorUpsample4)
         tensorUpsample3 = self.moduleUpsample3(tensorDeconv3)
-        # cat3 = torch.cat((skip2, tensorUpsample3), dim = 1)
         
         tensorDeconv2 = self.moduleDeconv2(tensorUpsample3)
         tensorUpsample2 = self.moduleUpsample2(tensorDeconv2)
-        # cat2 = torch.cat((skip1, tensorUpsample2), dim = 1)
         
         output = self.moduleDeconv1(tensorUpsample2)
 
                 
         return output
     
-
 
 class convAE(torch.nn.Module):
     def __init__(self, n_channel =3,  t_length = 5, memory_size = 10, feature_dim = 512, key_dim = 512, temp_update = 0.1, temp_gather=0.1):
@@ -145,24 +139,10 @@ class convAE(torch.nn.Module):
             
             return output, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, separateness_loss, compactness_loss
         
-        #test
         else:
             updated_fea, keys, softmax_score_query, softmax_score_memory,query, top1_keys, keys_ind, compactness_loss = self.memory(fea, keys, train)
             output = self.decoder(updated_fea)
             
             return output, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, query, top1_keys, keys_ind, compactness_loss
 
-    # def forward(self, x, keys, train=True):
-    #     fea, skip1, skip2, skip3 = self.encoder(x)
-    #     fea = torch.cat((fea, fea), dim=1)
-    #     output = self.decoder(fea, skip1, skip2, skip3)
-    #     return output, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-    
-        
-                                          
-
-
-
-    
-    

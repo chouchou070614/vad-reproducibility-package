@@ -10,22 +10,12 @@ from natsort import natsorted
 rng = np.random.RandomState(2020)
 
 def np_load_frame(filename, resize_height, resize_width):
-    """
-    Load image path and convert it to numpy.ndarray. Notes that the color channels are BGR and the color space
-    is normalized from [0, 255] to [-1, 1].
-
-    :param filename: the full path of image
-    :param resize_height: resized height
-    :param resize_width: resized width
-    :return: numpy.ndarray
-    """
+    """Load and resize a BGR image as a float32 array in [-1, 1]."""
     image_decoded = cv2.imread(filename)
     image_resized = cv2.resize(image_decoded, (resize_width, resize_height))
     image_resized = image_resized.astype(dtype=np.float32)
     image_resized = (image_resized / 127.5) - 1.0
     return image_resized
-
-
 
 
 class DataLoader(data.Dataset):

@@ -157,8 +157,6 @@ def parse_losses(log_path: Path, output: Path) -> List[Dict[str, object]]:
 
 
 def load_tensor(path: Path) -> Any:
-    # Keep packaging/contract validation importable on CPU-only control hosts;
-    # the real trajectory run still fails explicitly here if PyTorch is absent.
     import torch
 
     value = torch.load(str(path), map_location="cpu")
@@ -446,7 +444,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     if args.task_id != TASK_ID:
-        raise ValueError("this single-purpose runner requires task_id=%s" % TASK_ID)
+        raise ValueError("task_id=%s required" % TASK_ID)
     if args.trajectory_sample_count <= 0:
         raise ValueError("trajectory_sample_count must be positive")
     task_dir = Path(args.task_dir).resolve()
@@ -525,7 +523,7 @@ def main() -> None:
         "test_time_memory_update_for_raw_evidence": False,
         "trajectory_sample_count": args.trajectory_sample_count,
         "started_at": now(),
-        "algorithm_change": "none; audit snapshots and trace only",
+        "algorithm_change": "none",
     }
     write_json(task_dir / "config.json", config)
     write_json(task_dir / "commands.json", {"train": train_command})

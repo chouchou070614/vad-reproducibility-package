@@ -108,7 +108,7 @@ def save_query_trace(
     kmeans_seed: int,
     warmup_epoch: int,
 ) -> None:
-    """Save a pickle-free NPZ that can be loaded with allow_pickle=False."""
+    """Save query traces to an NPZ file."""
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = dict(trace)

@@ -90,7 +90,7 @@ class ContractTextTests(unittest.TestCase):
             '"final_checkpoint": "../model.pth"',
         ):
             self.assertIn(token, source)
-        self.assertIn("must be KMemory-Continue, not Freeze", source)
+        self.assertIn("continued memory updates required", source)
         self.assertIn('"family": "KMemory"', source)
         self.assertIn('"memory_update_policy": "Continue"', source)
         self.assertIn('"query_source_split": "normal_training"', source)
@@ -148,7 +148,7 @@ class ProductionCompatibilityTests(unittest.TestCase):
                 np.testing.assert_array_equal(metadata["pixel_mse"], numeric_evidence)
 
             records, rows = discover_records(Path(directory))
-            self.assertEqual(records, {})  # trajectory evidence is auxiliary, not a core R/P pair
+            self.assertEqual(records, {})
             discovered = [row for row in rows if row.get("status") == "DISCOVERED"]
             self.assertEqual(len(discovered), 1)
             self.assertEqual(discovered[0]["family"], "KMemoryTrajectory")
